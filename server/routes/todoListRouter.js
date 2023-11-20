@@ -1,10 +1,10 @@
 const Router = require('express')
 const router = new Router()
+const listController = require('../controllers/listController')
 
-router.post('/')
-router.get('/')
-router.get('/:id')
-router.put('/:id')
-router.delete('/:id')
+router.post('/', listController.create)
+router.get('/', listController.getAll)
+router.put('/:id', listController.updateList)
+router.delete('/:id', listController.deleteList)
 
 module.exports = router

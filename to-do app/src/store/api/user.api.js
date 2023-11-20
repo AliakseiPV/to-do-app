@@ -4,9 +4,12 @@ export const userApi = api.injectEndpoints({
 	endpoints: builder => ({
 		createUser: builder.mutation({
 			query: (body) => ({
-				url: 'user',
+				url: 'user/signUp',
 				method: 'POST',
 				body,
+				headers: {
+					"Content-type": "application/json; charset=UTF-8"
+				}
 			}),
 			invalidatesTags: () => [{
 				type: 'user'

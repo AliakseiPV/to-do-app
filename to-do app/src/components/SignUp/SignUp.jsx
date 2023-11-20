@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { useCreateUserMutation } from '../../store/api/user.api'
 
 const initialValue = {
-	id: null,
-	userName: '',
+	email: '',
 	password: ''
 }
 
@@ -15,7 +14,6 @@ const SignUp = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		console.log(user)
 		createUser(user)
 			.then(() => setUser(initialValue))
 	}
@@ -23,10 +21,10 @@ const SignUp = () => {
 	return (
 		<form onSubmit={handleSubmit}>
 			<label>
-				<input type="text" placeholder='User Name' value={user.userName} onChange={e => setUser({...user, userName: e.target.value})}/>
+				<input type="email" placeholder='User Email' value={user.email} onChange={e => setUser({ ...user, email: e.target.value})}/>
 			</label>
 			<label>
-				<input type="email" placeholder='Email' value={user.email} onChange={e => setUser({ ...user, password: e.target.value })} />
+				<input type="password" placeholder='Password' value={user.password} onChange={e => setUser({ ...user, password: e.target.value })} />
 			</label>
 			<button type='submit'>SignUp</button>
 		</form>
