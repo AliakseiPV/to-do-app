@@ -1,15 +1,15 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import SignUp from './components/SignUp/SignUp'
+import SignUp from './pages/SignUp'
+import Login from './pages/Login'
 
 function App() {
 
-  return (
+	return (
 		<>
-			<SignUp/>
-    </>
-  )
+			{/* <SignUp /> */}
+			<Login />
+		</>
+	)
 }
 
 export default App

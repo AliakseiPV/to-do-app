@@ -13,7 +13,6 @@ class TodoListController {
 
 			const token = req.headers.authorization.split(' ')[1]
 			const user = await getTokenInfo(token, User)
-
 			const list = await TodoList.findOne({ where: { name, userId: user.id } })
 
 			if (list) {

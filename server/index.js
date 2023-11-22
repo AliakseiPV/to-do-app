@@ -18,8 +18,6 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use('/api', router)
 
 
-
-
 const start = async () => {
 	try {
 		await sequelize.authenticate()
@@ -29,6 +27,5 @@ const start = async () => {
 		
 	}
 }
-
 
 start()

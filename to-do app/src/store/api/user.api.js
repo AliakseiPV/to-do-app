@@ -14,8 +14,21 @@ export const userApi = api.injectEndpoints({
 			invalidatesTags: () => [{
 				type: 'user'
 			}]
+		}),
+		loginUser: builder.mutation({
+			query: (body) => ({
+				url: '/user/login',
+				method: 'POST',
+				body,
+				headers: {
+					"Content-type": "application/json; charset=UTF-8"
+				}
+			}),
+			invalidatesTags: () => [{
+				type: 'user'
+			}]
 		})
 	})
 })
 
-export const { useCreateUserMutation } = userApi
+export const { useCreateUserMutation, useLoginUserMutation } = userApi

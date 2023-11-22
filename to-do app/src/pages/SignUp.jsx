@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useCreateUserMutation } from '../../store/api/user.api'
+import { useCreateUserMutation } from '../store/api/user.api'
 
 const initialValue = {
 	email: '',
@@ -9,7 +9,6 @@ const initialValue = {
 const SignUp = () => {
 
 	const [user, setUser] = useState(initialValue)
-
 	const [createUser] = useCreateUserMutation()
 
 	const handleSubmit = (e) => {
@@ -21,10 +20,22 @@ const SignUp = () => {
 	return (
 		<form onSubmit={handleSubmit}>
 			<label>
-				<input type="email" placeholder='User Email' value={user.email} onChange={e => setUser({ ...user, email: e.target.value})}/>
+				<input
+					type="email"
+					placeholder='User Email'
+					value={user.email}
+					onChange={e => setUser({ ...user, email: e.target.value })}
+					required
+				/>
 			</label>
 			<label>
-				<input type="password" placeholder='Password' value={user.password} onChange={e => setUser({ ...user, password: e.target.value })} />
+				<input
+					type="password"
+					placeholder='Password'
+					value={user.password}
+					onChange={e => setUser({ ...user, password: e.target.value })}
+					required
+				/>
 			</label>
 			<button type='submit'>SignUp</button>
 		</form>
