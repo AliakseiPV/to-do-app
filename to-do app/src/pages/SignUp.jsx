@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { useCreateUserMutation } from '../store/api/user.api'
+import { LOGIN_ROUTE } from '../router/consts'
+import { Link } from 'react-router-dom'
 
 const initialValue = {
 	email: '',
@@ -38,6 +40,10 @@ const SignUp = () => {
 				/>
 			</label>
 			<button type='submit'>SignUp</button>
+			<div>
+				Already have an account
+				<Link to={LOGIN_ROUTE}>Login</Link> <br />
+			</div>
 		</form>
 	)
 }

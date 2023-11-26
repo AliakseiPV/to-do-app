@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { useLoginUserMutation } from '../store/api/user.api'
+import { SIGNUP_ROUTE } from '../router/consts'
+import {  Link } from 'react-router-dom'
 
 const Login = () => {
 
@@ -13,7 +15,11 @@ const Login = () => {
 		e.preventDefault()
 
 		loginUser(user)
-			.then((data) => console.log(data))
+			.then((data) =>
+				localStorage.setItem('jwt', data.data.token)
+				// console.log(data.data.token)
+		)
+		console.log(localStorage.getItem('jwt'))
 	}
 
 	return (
@@ -40,6 +46,11 @@ const Login = () => {
 					/>
 				</label>
 				<button type='submit'>Login</button>
+				<div>
+					Dont have an account
+					<Link to={SIGNUP_ROUTE}>SignUp</Link> <br />
+				</div>
+				
 			</form>
 		</div>
 	)
