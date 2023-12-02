@@ -6,7 +6,14 @@ export const api = createApi({
 	tagTypes: ['user'],
 	baseQuery: fetchBaseQuery({
 		baseUrl: import.meta.env.VITE_API_URL,
-	}),
+		prepareHeaders: (headers) => {
+			const token = localStorage.getItem('jwt')
+			if (token) {
+				headers.set('Authorization', `Bearer ${token}`)
+			}
+			return headers
+		}
+	}), 
 	endpoints: builder => ({
 		getUser: builder.query({
 			query: (id) => `user/${id}`,

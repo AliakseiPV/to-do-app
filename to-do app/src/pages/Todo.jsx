@@ -1,8 +1,18 @@
 import React from 'react'
+import TaskList from '../components/TaskList'
+import Task from '../components/Task'
+
+
 
 const Todo = () => {
 	return (
-		<div>Todo</div>
+		<div>
+			<TaskList>
+				<Task />
+				<Task />
+				<Task />
+			</TaskList>
+		</div>
 	)
 }
 

@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { useLoginUserMutation } from '../store/api/user.api'
 import { SIGNUP_ROUTE } from '../router/consts'
-import {  Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { TODO_ROUTE } from "../router/consts"
+
 
 const Login = () => {
 
@@ -9,18 +11,26 @@ const Login = () => {
 		email: '',
 		password: ''
 	})
+
+	const navigate = useNavigate()
+
 	const [loginUser] = useLoginUserMutation()
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault()
 
-		loginUser(user)
-			.then((data) =>
-				localStorage.setItem('jwt', data.data.token)
-				// console.log(data.data.token)
-		)
-		console.log(localStorage.getItem('jwt'))
+		try {
+			const data = await loginUser(user)
+			localStorage.setItem('jwt', data.data.token)
+			if (localStorage.getItem('jwt')) {
+				navigate(TODO_ROUTE)
+			}
+		} catch (error) {
+			console.log(error.response.data.message)
+		}
 	}
+
+
 
 	return (
 		<div>
@@ -50,7 +60,7 @@ const Login = () => {
 					Dont have an account
 					<Link to={SIGNUP_ROUTE}>SignUp</Link> <br />
 				</div>
-				
+
 			</form>
 		</div>
 	)

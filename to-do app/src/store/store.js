@@ -1,7 +1,9 @@
 import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
-import {api} from './api/api'
+import { api } from './api/api'
+import authReducer from './auth/auth.slice'
 
 const reducers = combineReducers({
+	auth: authReducer,
 	[api.reducerPath]: api.reducer,
 })
 
