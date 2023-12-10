@@ -3,6 +3,7 @@ import { useLoginUserMutation } from '../store/api/user.api'
 import { SIGNUP_ROUTE } from '../router/consts'
 import { Link, useNavigate } from 'react-router-dom'
 import { TODO_ROUTE } from "../router/consts"
+import { useActions } from '../hooks/useActions'
 
 
 const Login = () => {
@@ -13,6 +14,8 @@ const Login = () => {
 	})
 
 	const navigate = useNavigate()
+	const { isAuth } = useActions()
+
 
 	const [loginUser] = useLoginUserMutation()
 
@@ -22,6 +25,7 @@ const Login = () => {
 		try {
 			const data = await loginUser(user)
 			localStorage.setItem('jwt', data.data.token)
+			isAuth(true)
 			if (localStorage.getItem('jwt')) {
 				navigate(TODO_ROUTE)
 			}
@@ -58,7 +62,7 @@ const Login = () => {
 				<button type='submit'>Login</button>
 				<div>
 					Dont have an account
-					<Link to={SIGNUP_ROUTE}>SignUp</Link> <br />
+					<Link to={SIGNUP_ROUTE}>SignUp</Link> 
 				</div>
 
 			</form>

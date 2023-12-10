@@ -1,5 +1,5 @@
 import { SIGNUP_ROUTE, LOGIN_ROUTE, TODO_ROUTE } from "./consts"
-import { Login, SignUp, Todo} from '../pages'
+import { Login, SignUp, Todo } from '../pages'
 
 export const PublicRoutes = [
 	{

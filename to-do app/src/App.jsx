@@ -1,24 +1,30 @@
-import React, { useEffect, useState } from 'react'
-import { BrowserRouter, Link } from 'react-router-dom'
-import { Login } from './pages'
+import React, { useEffect } from 'react'
+import { BrowserRouter } from 'react-router-dom'
 import Router from './router/Router'
 import { useCheckUserQuery } from './store/api/user.api'
-import { SIGNUP_ROUTE, LOGIN_ROUTE, TODO_ROUTE } from "./router/consts"
+
+import { useActions } from './hooks/useActions'
 
 function App() {
 
-	const {isLoading, data, isSuccess} = useCheckUserQuery()
+	const { isLoading, data, isSuccess } = useCheckUserQuery()
+	const { isAuth } = useActions()
+
+
 
 	useEffect(() => {
+		// console.log(isAuth(true))
+		// console.log(auth)
 		if (isSuccess) {
 			localStorage.setItem('jwt', data.token)
-			console.log(localStorage.getItem('jwt'))
+			isAuth(true)
 		}
 	}, [isSuccess])
 
 	if (isLoading) {
 		return <div>Here should be spinner</div>
 	}
+
 
 	return (
 		<BrowserRouter>

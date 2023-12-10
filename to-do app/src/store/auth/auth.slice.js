@@ -8,8 +8,8 @@ export const authSlice = createSlice({
 		value: false,
 	},
 	reducers: {
-		isAuth: (state) => {
-			state.value = localStorage.getItem('jwt') ? true : false
+		isAuth: (state, {payload: auth}) => {
+			state.value = auth
 		},
 	}
 })
