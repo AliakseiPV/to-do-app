@@ -33,7 +33,19 @@ class TodoListController {
 		try {
 			const token = req.headers.authorization.split(' ')[1]
 			const user = await getTokenInfo(token, User)
-			const list = await TodoList.findAll({ where: { userId: user.id } })
+			const lists = await TodoList.findAll({ where: { userId: user.id } })
+			res.json(lists)
+		} catch (error) {
+			next(error)
+		}
+	}
+
+	async getOne(req, res, next) {
+		try {
+			const { id } = req.params
+			const token = req.headers.authorization.split(' ')[1]
+			const user = await getTokenInfo(token, User)
+			const list = await TodoList.findOne({ where: { id, userId: user.id } })
 			res.json(list)
 		} catch (error) {
 			next(error)

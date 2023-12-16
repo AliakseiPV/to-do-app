@@ -1,5 +1,5 @@
-import { SIGNUP_ROUTE, LOGIN_ROUTE, TODO_ROUTE } from "./consts"
-import { Login, SignUp, Todo } from '../pages'
+import { SIGNUP_ROUTE, LOGIN_ROUTE, TODO_ROUTE, LIST_ROUTE } from "./consts"
+import { Login, SignUp, Todo, List } from '../pages'
 
 export const PublicRoutes = [
 	{
@@ -16,5 +16,9 @@ export const AuthRoutes = [
 	{
 		path: TODO_ROUTE,
 		Component: Todo
+	},
+	{
+		path: LIST_ROUTE + '/:id',
+		Component: List
 	}
 ]

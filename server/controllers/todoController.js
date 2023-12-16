@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 class TodoController {
 	async create(req, res, next) {
 		try {
-			const { id, task } = req.body
+			const { listId, task } = req.body
 			const token = req.headers.authorization.split(' ')[1]
 			const user = await getTokenInfo(token, User)
 
@@ -17,7 +17,7 @@ class TodoController {
 			const todo = await Todo.create({
 				task,
 				isComplete: false,
-				todoListId: id,
+				todoListId: listId,
 				userId: user.id
 			})
 
@@ -29,7 +29,7 @@ class TodoController {
 
 	async getListTasks(req, res, next) {
 		try {
-			const { id } = req.body
+			const { id } = req.params
 			const todo = await Todo.findAll({ where: { todoListId: id } })
 			res.json(todo)
 		} catch (error) {

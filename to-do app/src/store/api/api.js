@@ -1,9 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-
 export const api = createApi({
 	reducerPath: 'api',
-	tagTypes: ['user'],
+	tagTypes: ['User', 'List', 'Todo'],
 	baseQuery: fetchBaseQuery({
 		baseUrl: import.meta.env.VITE_API_URL,
 		prepareHeaders: (headers) => {
@@ -13,13 +12,11 @@ export const api = createApi({
 			}
 			return headers
 		}
-	}), 
+	}),
 	endpoints: builder => ({
 		getUser: builder.query({
 			query: (id) => `user/${id}`,
-			providesTags: () => [{
-				type: 'user'
-			}]
+			providesTags: [{ type: 'User' }]
 		})
-	})
+	}),
 })

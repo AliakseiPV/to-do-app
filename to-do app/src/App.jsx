@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import Router from './router/Router'
 import { useCheckUserQuery } from './store/api/user.api'
-
 import { useActions } from './hooks/useActions'
 
 function App() {
@@ -13,8 +12,6 @@ function App() {
 
 
 	useEffect(() => {
-		// console.log(isAuth(true))
-		// console.log(auth)
 		if (isSuccess) {
 			localStorage.setItem('jwt', data.token)
 			isAuth(true)
