@@ -22,9 +22,7 @@ export const userApi = api.injectEndpoints({
 					"Content-type": "application/json; charset=UTF-8"
 				}
 			}),
-			invalidatesTags: () => [{
-				type: 'user'
-			}]
+			invalidatesTags: [{ type: 'User' }]
 		}),
 		checkUser: builder.query({
 			query: () => ({

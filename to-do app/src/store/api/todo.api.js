@@ -42,6 +42,21 @@ export const userApi = api.injectEndpoints({
 			}),
 			invalidatesTags: [{ type: 'Todo' }]
 		}),
+		updateTask: builder.mutation({
+			query: ({ id, ...body }) => ({
+				url: `/todo/${id}`,
+				method: 'PUT',
+				body: body,
+			}),
+			invalidatesTags: [{ type: 'Todo' }]
+		}),
+		deleteTask: builder.mutation({
+			query: (id) => ({
+				url: `/todo/${id}`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: [{ type: 'Todo' }]
+		}),
 
 	})
 })
@@ -52,4 +67,6 @@ export const {
 	useGetListQuery,
 	useAddTaskMutation,
 	useGetTasksQuery,
+	useUpdateTaskMutation,
+	useDeleteTaskMutation,
 } = userApi

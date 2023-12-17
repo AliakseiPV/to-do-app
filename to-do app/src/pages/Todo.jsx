@@ -12,7 +12,7 @@ const Todo = () => {
 
 	const navigate = useNavigate()
 	const [listName, setListName] = useState(initialData)
-	
+
 	const { isLoading, data: lists, isSuccess, refetch } = useGetListsQuery()
 	const { isAuth } = useActions()
 	const [createList] = useCreateListMutation()
@@ -53,9 +53,14 @@ const Todo = () => {
 				</label>
 				<button onClick={addList} type='submit'>Add new list</button>
 			</form>
+
 			{isSuccess && lists.map(list => (
-				<Link to={LIST_ROUTE + `/${list.id}`} key={list.id}>{list.name}</Link>
-				// <TaskList listId={list.id} listName={list.name} key={list.id} />
+				<Link
+					to={LIST_ROUTE + `/${list.id}`}
+					key={list.id}
+				>
+					{list.name}
+				</Link>
 			))}
 		</div>
 	)

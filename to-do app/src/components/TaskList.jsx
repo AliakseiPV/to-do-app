@@ -3,7 +3,7 @@ import Task from './Task'
 import { useAddTaskMutation, useGetTasksQuery } from '../store/api/todo.api'
 
 const TaskList = (props) => {
-	const {children, listName, listId } = props
+	const { listName, listId } = props
 
 	const initialData = {
 		task: '',
@@ -12,7 +12,6 @@ const TaskList = (props) => {
 	}
 
 	const [task, setTask] = useState(initialData)
-
 
 	const [addTask] = useAddTaskMutation()
 	const { data: tasks, isSuccess, refetch } = useGetTasksQuery(listId)
@@ -29,7 +28,6 @@ const TaskList = (props) => {
 	}
 
 
-
 	return (
 		<div>
 			<h2>{listName}</h2>
@@ -43,7 +41,13 @@ const TaskList = (props) => {
 			</form>
 
 			{isSuccess && tasks.map(item => (
-				<Task taskName={item.task} key={item.id} />
+				<Task
+					taskName={item.task}
+					isComplete={item.isComplete}
+					taskId={item.id}
+					key={item.id}
+					refetchTask={refetch}
+				/>
 			))}
 
 		</div>

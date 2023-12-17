@@ -53,20 +53,18 @@ class TodoController {
 
 	async updateTask(req, res, next) {
 		try {
-			const {task} = req.body
+			const { isComplete } = req.body
 			const { id } = req.params
 
-			const findTask = await Todo.findOne({where: {id}}) 
+			const findTask = await Todo.findOne({ where: { id } })
 
 			if (!findTask) {
 				throw new Error('Task does not exist')
 			}
-			if (task === findTask.task) {
-				throw new Error('Task are the same')
-			}
-
-			const updateTask = await findTask.update({task: task})
+	
+			const updateTask = await findTask.update({ isComplete: isComplete })
 			res.json(updateTask)
+
 		} catch (error) {
 			next(error)
 		}
@@ -75,7 +73,7 @@ class TodoController {
 	async deleteTask(req, res, next) {
 		try {
 			const { id } = req.params
-			const findTask = await Todo.findOne({ where: { id } }) 
+			const findTask = await Todo.findOne({ where: { id } })
 			if (!findTask) {
 				throw new Error('Task does not exist')
 			}
