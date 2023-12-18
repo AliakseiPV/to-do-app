@@ -17,7 +17,16 @@ function List() {
 
 	return (
 		<div>
-			{isSuccess && <TaskList listName={list.name} listId={list.id} />}
+
+			
+			{isSuccess &&
+				<TaskList
+					listName={list.name}
+					listId={list.id}
+				/>
+			}
+
+
 		</div>
 	)
 }

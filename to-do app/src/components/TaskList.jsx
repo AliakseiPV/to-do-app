@@ -1,44 +1,50 @@
-import React, { useState } from 'react'
-import Task from './Task'
-import { useAddTaskMutation, useGetTasksQuery } from '../store/api/todo.api'
+import React from 'react'
+import { Task, CreateTask, Modal } from '../components'
+import {
+	useGetTasksQuery,
+	useDeleteListMutation,
+	useUpdateListMutation
+} from '../store/api/todo.api'
+import { useNavigate } from 'react-router-dom'
+import { TODO_ROUTE } from '../router/consts'
+
 
 const TaskList = (props) => {
 	const { listName, listId } = props
 
-	const initialData = {
-		task: '',
-		listId: listId,
-		isComplete: false,
-	}
+	const navigate = useNavigate()
 
-	const [task, setTask] = useState(initialData)
+	const [deleteList] = useDeleteListMutation()
+	const [updateList] = useUpdateListMutation()
 
-	const [addTask] = useAddTaskMutation()
-	const { data: tasks, isSuccess, refetch } = useGetTasksQuery(listId)
+	const { data: tasks, isSuccess } = useGetTasksQuery(listId)
 
-	const createTask = async (e) => {
+
+	const removeList = async () => {
 		try {
-			e.preventDefault()
-			await addTask(task)
-			setTask(initialData)
-			await refetch()
+			await deleteList(listId)
+			navigate(TODO_ROUTE)
 		} catch (error) {
-			console.error(error.message);
+			console.error(error.message)
 		}
 	}
 
+	const changeListName = async (id, body) => {
+		try {
+			await updateList({ id, name: body })
+		} catch (error) {
+			console.error(error.message)
+		}
+	}
 
 	return (
 		<div>
 			<h2>{listName}</h2>
+			<button onClick={removeList}>Delete</button>
 
-			<form>
-				<label>
-					Enter your new task
-					<input type="text" value={task.task} onChange={e => setTask({ ...task, task: e.target.value })} />
-				</label>
-				<button onClick={createTask} type='submit'>Add new task</button>
-			</form>
+			<Modal clickHandler={changeListName} listId={listId} />
+
+			<CreateTask listId={listId} />
 
 			{isSuccess && tasks.map(item => (
 				<Task
@@ -46,7 +52,7 @@ const TaskList = (props) => {
 					isComplete={item.isComplete}
 					taskId={item.id}
 					key={item.id}
-					refetchTask={refetch}
+					listId={item.todoListId}
 				/>
 			))}
 

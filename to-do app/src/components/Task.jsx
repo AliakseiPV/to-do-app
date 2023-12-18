@@ -2,7 +2,7 @@ import React from 'react'
 import { useUpdateTaskMutation, useDeleteTaskMutation } from '../store/api/todo.api'
 
 const Task = (params) => {
-	const { taskName, taskId, isComplete, refetchTask } = params
+	const { taskName, taskId, isComplete, listId } = params
 
 	const [updateTask] = useUpdateTaskMutation()
 	const [deleteTask] = useDeleteTaskMutation()
@@ -19,11 +19,9 @@ const Task = (params) => {
 	const removeTask = async () => {
 		try {
 			await deleteTask(taskId)
-			refetchTask()
 		} catch (error) {
 			console.error(error.message);
 		}
-
 	}
 
 	return (
