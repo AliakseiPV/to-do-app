@@ -4,9 +4,18 @@ export default {
 		"./index.html",
 		"./src/**/*.{js,ts,jsx,tsx}",
 	],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
+	theme: {
+		extend: {
+			colors: {
+				purple1: '#C8B6FF',
+				lightpurple: '#E7C6FF',
+				sweetpink: '#FFD6FF',
+				babyblue: '#B8C0FF',
+				lightblue: '#BBD0FF',
+				bgwhite:'#F9F9F9',
+			}
+		},
+	},
+	plugins: [],
 }
 

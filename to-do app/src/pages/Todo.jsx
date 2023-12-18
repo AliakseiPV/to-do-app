@@ -1,29 +1,13 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { LOGIN_ROUTE, LIST_ROUTE } from "../router/consts"
-import { useActions } from '../hooks/useActions'
+import { Link } from 'react-router-dom'
+import { LIST_ROUTE } from "../router/consts"
 import { CreateList } from '../components'
-import { useGetListsQuery, useDeleteListMutation } from '../store/api/todo.api'
-
+import { useGetListsQuery, useDeleteListMutation } from '../store/api/list.api'
 
 const Todo = () => {
 
-	const navigate = useNavigate()
-
 	const { isLoading, data: lists, isSuccess } = useGetListsQuery()
-	const { isAuth } = useActions()
 	const [deleteList] = useDeleteListMutation()
-
-
-	function logout() {
-		try {
-			localStorage.removeItem('jwt')
-			isAuth(false)
-			navigate(LOGIN_ROUTE)
-		} catch (error) {
-			console.error(error)
-		}
-	}
 
 	const removeList = async (id) => {
 		try {
@@ -39,8 +23,6 @@ const Todo = () => {
 
 	return (
 		<div>
-			<button onClick={logout}>Logout</button>
-
 			<CreateList />
 
 			<ul>

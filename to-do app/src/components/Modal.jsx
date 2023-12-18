@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 
-function Modal({ clickHandler, listId }) {
+function Modal(props) {
+	const { clickHandler, listId, listName } = props
 	const [showModal, setShowModal] = useState(false);
 	const [name, setName] = useState('')
 
 	return (
 		<>
 			<button
-				className="bg-pink-500 text-white active:bg-pink-600 px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+				className="bg-indigo-500 text-white active:bg-indigo-600 px-5 py-3 rounded-lg outline-none focus:outline-none ease-linear"
 				type="button"
 				onClick={() => setShowModal(true)}
 			>
@@ -29,7 +30,7 @@ function Modal({ clickHandler, listId }) {
 								</div>
 								{/*body*/}
 								<div className="relative p-6 flex-auto">
-									<input type="text" value={name} onChange={e => setName(e.target.value)}/>
+									<input type="text" value={name} onChange={e => setName(e.target.value)} />
 								</div>
 								{/*footer*/}
 								<div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
@@ -44,7 +45,8 @@ function Modal({ clickHandler, listId }) {
 										className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
 										type="button"
 										onClick={() => {
-											clickHandler(listId, name)
+											clickHandler(listId, listName, name)
+											setName('')
 											setShowModal(false)
 										}}
 									>

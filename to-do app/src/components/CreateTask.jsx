@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useAddTaskMutation } from '../store/api/todo.api'
+import { useAddTaskMutation } from '../store/api/task.api'
 
 function CreateTask(props) {
 	const { listId } = props
@@ -30,6 +30,7 @@ function CreateTask(props) {
 					type="text"
 					value={task.task}
 					onChange={e => setTask({ ...task, task: e.target.value })}
+					required
 				/>
 			</label>
 			<button onClick={createTask} type='submit'>Add new task</button>

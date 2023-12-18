@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { useCreateListMutation } from '../store/api/todo.api'
-
+import { useCreateListMutation } from '../store/api/list.api'
 
 const initialData = {
 	name: ''
@@ -29,6 +28,7 @@ function CreateList() {
 					type="text"
 					value={listName.name}
 					onChange={e => setListName({ ...listName, name: e.target.value })}
+					required
 				/>
 			</label>
 			<button onClick={addList} type='submit'>Add new list</button>

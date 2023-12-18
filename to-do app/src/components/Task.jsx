@@ -1,8 +1,8 @@
 import React from 'react'
-import { useUpdateTaskMutation, useDeleteTaskMutation } from '../store/api/todo.api'
+import { useUpdateTaskMutation, useDeleteTaskMutation } from '../store/api/task.api'
 
 const Task = (params) => {
-	const { taskName, taskId, isComplete, listId } = params
+	const { taskName, taskId, isComplete } = params
 
 	const [updateTask] = useUpdateTaskMutation()
 	const [deleteTask] = useDeleteTaskMutation()

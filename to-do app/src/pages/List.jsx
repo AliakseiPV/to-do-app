@@ -1,5 +1,5 @@
 import React from 'react'
-import { useGetListQuery } from '../store/api/todo.api'
+import { useGetListQuery } from '../store/api/list.api'
 import { TaskList } from '../components'
 import { useParams } from 'react-router-dom'
 
@@ -17,16 +17,12 @@ function List() {
 
 	return (
 		<div>
-
-			
 			{isSuccess &&
 				<TaskList
 					listName={list.name}
 					listId={list.id}
 				/>
 			}
-
-
 		</div>
 	)
 }

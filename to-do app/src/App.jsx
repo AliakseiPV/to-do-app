@@ -3,13 +3,13 @@ import { BrowserRouter } from 'react-router-dom'
 import Router from './router/Router'
 import { useCheckUserQuery } from './store/api/user.api'
 import { useActions } from './hooks/useActions'
+import { NavBar } from './components'
+
 
 function App() {
 
 	const { isLoading, data, isSuccess } = useCheckUserQuery()
 	const { isAuth } = useActions()
-
-
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -22,9 +22,9 @@ function App() {
 		return <div>Here should be spinner</div>
 	}
 
-
 	return (
 		<BrowserRouter>
+			<NavBar/>
 			<Router />
 		</BrowserRouter>
 	)

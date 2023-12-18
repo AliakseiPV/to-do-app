@@ -1,12 +1,11 @@
 import React from 'react'
 import { PublicRoutes, AuthRoutes } from './routes'
 import { Routes, Route } from 'react-router-dom'
-import { NotFound } from '../pages'
+import { Login, NotFound } from '../pages'
 import { useAuth } from '../hooks/useAuth'
 
 const Router = () => {
-
-
+	
 	const { auth } = useAuth()
 
 	return (
@@ -17,7 +16,11 @@ const Router = () => {
 			{auth && AuthRoutes.map(({ path, Component }, index) =>
 				<Route key={index} path={path} element={<Component />} />
 			)}
-			<Route path='*' element={<NotFound />} />
+			{auth ?
+				<Route path='*' element={<NotFound />} />
+				:
+				<Route path='*' element={<Login />} />
+			}
 		</Routes>
 	)
 }
