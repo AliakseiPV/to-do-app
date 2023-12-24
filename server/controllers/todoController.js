@@ -1,3 +1,4 @@
+const ApiError = require('../error/ApiError')
 const getTokenInfo = require('../helpers/getTokenInfo')
 const { Todo, User } = require('../models/models')
 const jwt = require('jsonwebtoken')
@@ -11,7 +12,7 @@ class TodoController {
 			const user = await getTokenInfo(token, User)
 
 			if (!task) {
-				throw new Error('Task is empty')
+				return next(ApiError.unprocessable('Name input was left blank'))
 			}
 
 			const todo = await Todo.create({
@@ -21,9 +22,9 @@ class TodoController {
 				userId: user.id
 			})
 
-			return res.json(todo)
+			res.status(201).json(todo)
 		} catch (error) {
-			next(error)
+			next(ApiError.badRequest(error.message))
 		}
 	}
 
@@ -31,9 +32,9 @@ class TodoController {
 		try {
 			const { id } = req.params
 			const todo = await Todo.findAll({ where: { todoListId: id } })
-			res.json(todo)
+			res.status(200).json(todo)
 		} catch (error) {
-			next(error)
+			next(ApiError.badRequest(error.message))
 		}
 	}
 
@@ -41,13 +42,10 @@ class TodoController {
 		try {
 			const { id } = req.params
 			const task = await Todo.findOne({ where: { id } })
-			if (!task) {
-				throw new Error('Task does not exist')
-			}
 
-			res.json(task)
+			res.status(200).json(task)
 		} catch (error) {
-			next(error)
+			next(ApiError.badRequest(error.message))
 		}
 	}
 
@@ -55,18 +53,12 @@ class TodoController {
 		try {
 			const { isComplete } = req.body
 			const { id } = req.params
-
 			const findTask = await Todo.findOne({ where: { id } })
-
-			if (!findTask) {
-				throw new Error('Task does not exist')
-			}
-	
 			const updateTask = await findTask.update({ isComplete: isComplete })
-			res.json(updateTask)
 
+			res.status(200).json(updateTask)
 		} catch (error) {
-			next(error)
+			next(ApiError.badRequest(error.message))
 		}
 	}
 
@@ -74,14 +66,11 @@ class TodoController {
 		try {
 			const { id } = req.params
 			const findTask = await Todo.findOne({ where: { id } })
-			if (!findTask) {
-				throw new Error('Task does not exist')
-			}
 
 			findTask.destroy()
-			res.json(findTask)
+			res.status(200).json(findTask)
 		} catch (error) {
-			next(error)
+			next(ApiError.badRequest(error.message))
 		}
 	}
 }

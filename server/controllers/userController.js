@@ -1,3 +1,4 @@
+const ApiError = require('../error/ApiError')
 const bcrypt = require('bcrypt')
 const { User } = require('../models/models')
 const { generateJwt } = require('../helpers/jwtHelpers')
@@ -9,22 +10,21 @@ class UserController {
 		try {
 			const { email, password } = req.body
 			if (!email || !password) {
-				throw new Error('Email or password missing')
+				return next(ApiError.unprocessable('Email or password input was left blank'))
 			}
 
 			const candidate = await User.findOne({ where: { email } })
 			if (candidate) {
-				throw new Error('User with this email alredy exists')
+				return next(ApiError.forbidden('User with this email alredy exists'))
 			}
 
 			const hashPassword = await bcrypt.hash(password, 5)
 			const user = await User.create({ email, password: hashPassword })
 			const token = generateJwt(user.id, user.email)
 
-			return res.json({ token })
-
+			res.status(201).json({ token })
 		} catch (error) {
-			next(error)
+			next(ApiError.badRequest(error.message))
 		}
 	}
 
@@ -33,29 +33,28 @@ class UserController {
 			const { email, password } = req.body
 			const user = await User.findOne({ where: { email } })
 			if (!user) {
-				throw new Error('User is not fount')
+				return next(ApiError.notFound('User with this email does not exist'))
 			}
 			let comparePassword = bcrypt.compareSync(password, user.password)
-			
+
 			if (!comparePassword) {
-				throw new Error('Password is wrong')
+				return next(ApiError.unauthorized('Password is incorrect'))
 			}
 			const token = generateJwt(user.id, user.email)
-			return res.json({token})
+			res.status(200).json({ token })
 		} catch (error) {
-			next(error)
+			next(ApiError.badRequest(error.message))
 		}
 	}
 
 	async check(req, res, next) {
 		try {
 			const token = generateJwt(req.user.id, req.user.email)
-			return res.json({token})
+			res.status(200).json({ token })
 		} catch (error) {
-			next(error)
+			next(ApiError.badRequest(error.message))
 		}
 	}
 }
-
 
 module.exports = new UserController

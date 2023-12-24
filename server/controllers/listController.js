@@ -1,31 +1,30 @@
+const ApiError = require('../error/ApiError')
 const getTokenInfo = require('../helpers/getTokenInfo')
 const { TodoList, User, Todo } = require('../models/models')
-const jwt = require('jsonwebtoken')
-
 
 class TodoListController {
 	async create(req, res, next) {
 		try {
 			const { name } = req.body
-			if (!name) {
-				throw new Error('No name in list')
-			}
-
 			const token = req.headers.authorization.split(' ')[1]
 			const user = await getTokenInfo(token, User)
 			const list = await TodoList.findOne({ where: { name, userId: user.id } })
 
+			if (!name) {
+				return next(ApiError.unprocessable('Name input was left blank'))
+			}
 			if (list) {
-				throw new Error('This name alredy exist')
+				return next(ApiError.forbidden('The list name is alredy used'))
 			}
 
 			const createdList = await TodoList.create({
 				name,
 				userId: user.id
 			})
-			return res.json(createdList)
+
+			res.status(201).json(createdList)
 		} catch (error) {
-			next(error)
+			next(ApiError.badRequest(error.message))
 		}
 	}
 
@@ -34,9 +33,9 @@ class TodoListController {
 			const token = req.headers.authorization.split(' ')[1]
 			const user = await getTokenInfo(token, User)
 			const lists = await TodoList.findAll({ where: { userId: user.id } })
-			res.json(lists)
+			res.status(200).json(lists)
 		} catch (error) {
-			next(error)
+			next(ApiError.badRequest(error.message))
 		}
 	}
 
@@ -46,9 +45,9 @@ class TodoListController {
 			const token = req.headers.authorization.split(' ')[1]
 			const user = await getTokenInfo(token, User)
 			const list = await TodoList.findOne({ where: { id, userId: user.id } })
-			res.json(list)
+			res.status(200).json(list)
 		} catch (error) {
-			next(error)
+			next(ApiError.badRequest(error.message))
 		}
 	}
 
@@ -63,18 +62,18 @@ class TodoListController {
 			const checkName = await TodoList.findOne({ where: { name, userId: user.id } })
 
 			if (!name) {
-				throw new Error('The name is empty')
+				return next(ApiError.unprocessable('Name input was left blank'))
 			}
 			if (checkName) {
-				throw new Error('This name already exists')
+				return next(ApiError.forbidden('The list name is alredy used'))
 			}
 			if (list) {
 				await list.update({ name: name })
 			}
 
-			res.json(list)
+			res.status(200).json(list)
 		} catch (error) {
-			next(error)
+			next(ApiError.badRequest(error.message))
 		}
 	}
 
@@ -86,9 +85,9 @@ class TodoListController {
 
 			await Todo.destroy({ where: { todoListId: id } })
 			await TodoList.destroy({ where: { id, userId: user.id } })
-			res.json('Successfully delete')
+			res.status(200).json('Successfully deleted')
 		} catch (error) {
-			next(error)
+			next(ApiError.badRequest(error.message))
 		}
 	}
 }

@@ -5,7 +5,7 @@ import { useActions } from '../hooks/useActions'
 import { useAuth } from '../hooks/useAuth'
 
 
-function NavBar() {
+const NavBar = () => {
 
 	const navigate = useNavigate()
 	const { isAuth } = useActions()
