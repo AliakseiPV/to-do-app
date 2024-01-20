@@ -9,8 +9,12 @@ class UserController {
 	async signUp(req, res, next) {
 		try {
 			const { email, password } = req.body
-			if (!email || !password) {
-				return next(ApiError.unprocessable('Email or password input was left blank'))
+
+			if (!email) {
+				return next(ApiError.unprocessable('Email input was left blank'))
+			}
+			if (!password) {
+				return next(ApiError.unprocessable('Password input was left blank'))
 			}
 
 			const candidate = await User.findOne({ where: { email } })
@@ -20,9 +24,8 @@ class UserController {
 
 			const hashPassword = await bcrypt.hash(password, 5)
 			const user = await User.create({ email, password: hashPassword })
-			const token = generateJwt(user.id, user.email)
-
-			res.status(201).json({ token })
+			
+			res.status(201).json('You have signed up successfully')
 		} catch (error) {
 			next(ApiError.badRequest(error.message))
 		}

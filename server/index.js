@@ -5,6 +5,7 @@ const sequelize = require('./db')
 const router = require('./routes/index')
 const PORT = process.env.PORT || 5000 
 const bodyParser = require('body-parser')
+const errorHandler = require('./middlware/ErrorHandlingMiddleware')
 
 
 const app = express()
@@ -17,6 +18,7 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use('/api', router)
 
+app.use(errorHandler)
 
 const start = async () => {
 	try {

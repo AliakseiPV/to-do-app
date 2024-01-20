@@ -3,7 +3,6 @@ import { BrowserRouter } from 'react-router-dom'
 import Router from './router/Router'
 import { useCheckUserQuery } from './store/api/user.api'
 import { useActions } from './hooks/useActions'
-import { NavBar } from './components'
 
 
 function App() {
@@ -24,7 +23,6 @@ function App() {
 
 	return (
 		<BrowserRouter>
-			<NavBar/>
 			<Router />
 		</BrowserRouter>
 	)

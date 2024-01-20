@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { useAddTaskMutation } from '../store/api/task.api'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 function CreateTask(props) {
 	const { listId } = props
@@ -23,17 +25,25 @@ function CreateTask(props) {
 	}
 
 	return (
-		<form>
-			<label>
-				Enter your new task
-				<input
-					type="text"
-					value={task.task}
-					onChange={e => setTask({ ...task, task: e.target.value })}
-					required
-				/>
-			</label>
-			<button onClick={createTask} type='submit'>Add new task</button>
+		<form className='flex justify-center w-full'>
+
+			<button
+				onClick={createTask}
+				type='submit'
+			>
+				<FontAwesomeIcon icon={faPlus} size="xl" style={{ color: "#BBD0FF", }} />
+			</button>
+
+			<input
+				type="text"
+				value={task.task}
+				onChange={e => setTask({ ...task, task: e.target.value })}
+				required
+				placeholder='Create new task...'
+				className="px-4 py-1.5 my-1 w-full focus:outline-none text-gray-500"
+			/>
+
+
 		</form>
 	)
 }
