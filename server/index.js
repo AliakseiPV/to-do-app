@@ -18,6 +18,7 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use('/api', router)
 
+
 app.use(errorHandler)
 
 const start = async () => {
