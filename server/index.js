@@ -10,12 +10,6 @@ const errorHandler = require('./middlware/ErrorHandlingMiddleware')
 
 const app = express()
 
-app.use(function (req, res, next) {
-	res.setHeader(
-		'Content-Security-Policy-Report-Only', "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; frame-src 'self'"
-	)
-	next()
-})
 app.use(cors({
 	origin: 'https://to-do-app-client.onrender.com',
 	methods: ['GET', 'POST', 'DELETE', 'PUT'],
