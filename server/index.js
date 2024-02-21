@@ -11,7 +11,7 @@ const errorHandler = require('./middlware/ErrorHandlingMiddleware')
 const app = express()
 
 app.use(cors({
-	origin: 'https://api.render.com/deploy/srv-cnaebr5a73kc73emqjdg?key=CCf-BFaDS1Q',
+	origin: '*',
 	methods: ['GET', 'POST', 'DELETE', 'PUT'],
 }))
 app.use(express.json())
