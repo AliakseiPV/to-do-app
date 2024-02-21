@@ -11,13 +11,13 @@ const errorHandler = require('./middlware/ErrorHandlingMiddleware')
 const app = express()
 
 app.use(cors({
-	origin: 'https://api.render.com/deploy/srv-cnafpnq1hbls73dk6q0g?key=obdZeQbRZc4',
+	origin: 'https://to-do-app-client.onrender.com',
 	methods: ['GET', 'POST', 'DELETE', 'PUT'],
 }))
 
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use('/api', router)
+app.use('/', router)
 
 
 app.use(errorHandler)
